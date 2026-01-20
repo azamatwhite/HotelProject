@@ -4,9 +4,9 @@ import repositories.RoomRepository;
 import models.Room;
 
 public class HotelController {
-  private RoomRepository roonRepo;
+  private RoomRepository roomRepo;
   public HotelController(RoomRepository roomRepo){
-    this.roonRepo=roomRepo;
+    this.roomRepo=roomRepo;
   };
 
     public String makeReservation(int roomId, int nights) {
