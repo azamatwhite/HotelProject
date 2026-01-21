@@ -15,7 +15,6 @@ public class UserRepository {
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, user.getName());
             st.setString(2, user.getSurname());
-            // Если в User нет getPhone, добавь его в модель!
             st.execute();
         } catch (SQLException e) {
             System.out.println("Ошибка SQL: " + e.getMessage());
@@ -43,3 +42,4 @@ public class UserRepository {
         return null;
     }
 }
+
