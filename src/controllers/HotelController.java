@@ -10,7 +10,7 @@ public class HotelController {
   };
 
     public String makeReservation(int roomId, int nights) {
-        Room room=roomRepo.findRoomById(roomId);
+        Room room=roomRepo.getRoomById(roomId);
         
         if (room==null) {
             return"Error: room not found!";

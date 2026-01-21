@@ -2,22 +2,23 @@ package models;
 
 public class Room {
     private int id;
-    private static int id_gen = 1;
     private int roomNumber;
     private String type;
-    private int price;
+    private double price;
 
     public Room() {
-        id = id_gen++;
     }
 
-    public Room(int roomNumber, String type, int price) {
-        this();
+    public Room(int id, int roomNumber, String type, int price) {
+        setId(id);
         setRoomNumber(roomNumber);
         setType(type);
         setPrice(price);
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public int getId() {
         return id;
     }

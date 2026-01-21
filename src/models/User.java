@@ -2,20 +2,22 @@ package models;
 
 public class User {
     private int id;
-    public static int id_gen = 1;
     private String name;
     private String surname;
     private String phone;
 
     public User() {
-        id = id_gen++;
     }
 
-    public User(String name, String surname, String phone) {
-        this();
+    public User(int id, String name, String surname, String phone) {
+        setId(id);
         setName(name);
         setSurname(surname);
         setPhone(phone);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId(){

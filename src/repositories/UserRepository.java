@@ -1,7 +1,7 @@
-package com.hotel.repositories;
+package repositories;
 
-import com.hotel.data.PostgresDB;
-import com.hotel.models.User;
+import data.PostgresDB;
+import models.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ public class UserRepository {
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, user.getName());
             st.setString(2, user.getSurname());
+            st.setString(3, user.getPhone());
             st.execute();
         } catch (SQLException e) {
             System.out.println("Ошибка SQL: " + e.getMessage());

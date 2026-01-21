@@ -1,7 +1,7 @@
-package com.hotel.repositories;
+package repositories;
 
-import com.hotel.data.PostgresDB;
-import com.hotel.models.Room;
+import data.PostgresDB;
+import models.Room;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
