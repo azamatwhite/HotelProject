@@ -1,23 +1,52 @@
-package com.example.hotelproject.repositories;
+package com.hotel.repositories;
 
-import com.example.hotelproject.models.Room;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
+import com.hotel.data.PostgresDB;
+import com.hotel.models.Room;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-public interface RoomRepository extends JpaRepository<Room, Long> {
+public class RoomRepository {
 
-    // бос номер табу
-    List<Room> findByAvailableTrue();
+    public List<Room> getAllRooms() {
+        List<Room> rooms = new ArrayList<>();
+        String sql = "SELECT * FROM rooms ORDER BY room_number";
 
-    //котегория бойынша номер табу
-    List<Room> findByCategory(String category);
+        try (Connection con = PostgresDB.getConnection()) {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
 
-    //номер бағасын көрсетілген бағадан төменін іздеу
-    List<Room> findByPricePerNightLessThanEqual(Double price);
+            while (rs.next()) {
+                rooms.add(new Room(
+                    rs.getInt("id"),
+                    rs.getInt("room_number"),
+                    rs.getString("type"),
+                    rs.getDouble("price")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rooms;
+    }
     
-    //белгіллі котегорияның бос номерін табу
-    List<Room> findByCategoryAndAvailableTrue(String category);
+    public Room getRoomById(int id) {
+        String sql = "SELECT * FROM rooms WHERE id = ?";
+        try (Connection con = PostgresDB.getConnection()) {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new Room(
+                    rs.getInt("id"),
+                    rs.getInt("room_number"),
+                    rs.getString("type"),
+                    rs.getDouble("price")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
