@@ -9,7 +9,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(int id, int roomNumber, String type, int price) {
+    public Room(int id, int roomNumber, String type, double price) {
         setId(id);
         setRoomNumber(roomNumber);
         setType(type);
@@ -39,11 +39,11 @@ public class Room {
         return type;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

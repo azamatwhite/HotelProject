@@ -12,7 +12,7 @@ public class PostgresDB {
         catch (SQLException e) {
             System.out.println("Error: Cannot get connection with DB");
             System.out.println(e.getMessage());
-            return null;
+            throw new RuntimeException(e);
         }
     }
 }
