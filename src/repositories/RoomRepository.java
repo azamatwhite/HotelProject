@@ -1,16 +1,23 @@
-package repositories;
+package com.example.hotelproject.repositories;
 
-import models.Room;
+import com.example.hotelproject.models.Room;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class RoomRepository {
-    // Мико базаны бітіргенше, біз осындай уақытша әдіс жасаймыз
-    public Room findRoomById(int id) {
-        // Егер сен 1-ді енгізсең, саған автоматты түрде мына бөлме келеді
-        if (id == 1) {
-            return new Room(101, "Standard", 15000);
-        } else if (id == 2) {
-            return new Room(202, "Luxury", 35000);
-        }
-        return null; // Басқа ID болса, бөлме табылмады деп қайтарады
-    }
+import java.util.List;
+
+@Repository
+public interface RoomRepository extends JpaRepository<Room, Long> {
+
+    // бос номер табу
+    List<Room> findByAvailableTrue();
+
+    //котегория бойынша номер табу
+    List<Room> findByCategory(String category);
+
+    //номер бағасын көрсетілген бағадан төменін іздеу
+    List<Room> findByPricePerNightLessThanEqual(Double price);
+    
+    //белгіллі котегорияның бос номерін табу
+    List<Room> findByCategoryAndAvailableTrue(String category);
 }
