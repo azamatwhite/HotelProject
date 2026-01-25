@@ -2,25 +2,27 @@ package controllers;
 
 import repositories.RoomRepository;
 import models.Room;
+import models.User;
 
 public class HotelController {
-  private RoomRepository roomRepo;
-  public HotelController(RoomRepository roomRepo){
-    this.roomRepo=roomRepo;
-  };
+private RoomRepository roomRepo;
+public HotelController(RoomRepository roomRepo){
+  this.roomRepo=roomRepo;
+}
+public String makeReservation(User user,int roomId,int nights){
+  Room room=roomRepo.getRoomByid(roomId);
 
-    public String makeReservation(int roomId, int nights) {
-        Room room=roomRepo.getRoomById(roomId);
-        
-        if (room==null) {
-            return"Error: room not found!";
-        }
+  if(room==null){
+    System.out.println("Error : room not fount !");
+  }
+  Double totalPrice=room.getPrice()*nights;
+return "\nRESERVATION DETAILS:" +
+           "\nCustomer: " + user.getName() + " " + user.getSurname() +
+           "\nPhone: " + user.getPhone() +
+           "\nRoom Type: " + room.getType() + 
+           "\nStay duration: " + nights + " nights" +
+           "\nTotal Price: " + totalPrice + " KZT";
 
-    
-        double totalPrice=room.getPrice() * nights;
-        
-        return "Order accepted! Room type: " + room.getType() + 
-               "\nNumber of days: " + nights + 
-               "\nTotal cost: "+totalPrice+" KZT";
-    }
+
+}
 }
