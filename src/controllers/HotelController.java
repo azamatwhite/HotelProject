@@ -13,7 +13,7 @@ public String makeReservation(User user,int roomId,int nights){
   Room room=roomRepo.getRoomByid(roomId);
 
   if(room==null){
-    System.out.println("Error : room not fount !");
+    return "Error : room not fount !";
   }
   Double totalPrice=room.getPrice()*nights;
 return "\nRESERVATION DETAILS:" +
