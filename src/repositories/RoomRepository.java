@@ -20,13 +20,8 @@ public class RoomRepository{
                     rs.getInt("room_number"),
                     rs.getString("type"),
                     rs.getDouble("price")
-
                 ));
-                
-                
             }
-
-            
         } catch (Exception e) {
           System.out.println( e.getMessage());
         }
@@ -44,15 +39,11 @@ public class RoomRepository{
                     rs.getInt("room_number"),
                     rs.getString("type"),
                     rs.getDouble("price")
-
             );
            }
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-
     }
-
 }
