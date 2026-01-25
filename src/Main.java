@@ -3,6 +3,7 @@ import models.User;
 import models.Room;
 import repositories.RoomRepository;
 import repositories.UserRepository;
+import repositories.ReservationRepository;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -49,11 +50,15 @@ public class Main {
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
 
-                    System.out.print("Enter number of nights: ");
-                    int nights = scanner.nextInt();
+                    System.out.print("Дата заезда (2023-12-31): ");
+                    String dateFrom = scanner.next();
 
-                    String result = controller.makeReservation(user, roomId, nights);
-                    System.out.println("\n" + result);
+                    System.out.print("Дата выезда (2024-01-05): ");
+                    String dateTo = scanner.next();
+
+                    String res = controller.makeReservation(user, roomId, dateFrom, dateTo);
+                    System.out.println(res);
+
                 } 
                 else if (choice == 3) {
                     System.out.print("Enter User ID to find: ");

@@ -8,14 +8,20 @@ import java.sql.*;
 public class UserRepository {
     public void createUser(User user){
         String sql="INSERT INTO users(name, surname, phone) VALUES(?, ?, ?)";
-        try (Connection con=PostgresDB.getConnection()) {
-            PreparedStatement st=con.prepareStatement(sql);
+
+        try (Connection con = PostgresDB.getConnection()) {
+
+            PreparedStatement st = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setString(1, user.getName());
-             st.setString(2, user.getSurname());
-              st.setString(3, user.getPhone());
-              st.execute();
-            
-            
+            st.setString(2, user.getSurname());
+            st.setString(3, user.getPhone());
+            st.execute();
+
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                int generatedId = rs.getInt(1);
+                user.setId(generatedId);
+            }
         } catch (Exception e) {
             System.out.println("Error SQL : "+ e.getMessage());
 
@@ -41,7 +47,7 @@ public class UserRepository {
                 System.out.println(e.getMessage());
 
             }
-    return null;}
-
+    return null;
+    }
 }
 
