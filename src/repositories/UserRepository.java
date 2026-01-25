@@ -3,8 +3,7 @@ package repositories;
 import data.PostgresDB;
 import models.User;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class UserRepository {
     public void createUser(User user){
@@ -30,7 +29,7 @@ public class UserRepository {
                 ResultSet rs=st.executeQuery();
                 if(rs.next()){
                     return new User(
-                        rs.getInt("int"),
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("surname"),
                         rs.getString("phone")
