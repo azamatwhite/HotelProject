@@ -16,23 +16,28 @@ public class HotelController {
       this.reservationRepo=reservationRepo;
     }
 
-    public String makeReservation(User user,int roomId,int nights, String dateFrom, String dateTo) {
+    public String makeReservation(User user,int roomId, String dateFrom, String dateTo) {
       Room room=roomRepo.getRoomByid(roomId);
 
       if(room==null){
-        return "Error : room not fount !";
+        return "Error : room not found!";
+      }
+
+      boolean available = reservationRepo.isRoomAvailable(roomId, dateFrom, dateTo);
+
+      if (!available) {
+          return "Error: Room is already booked for this dates.";
       }
       LocalDate start = LocalDate.parse(dateFrom);
       LocalDate end = LocalDate.parse(dateTo);
 
       long days = ChronoUnit.DAYS.between(start, end);
 
-      // Проверка на адекватность
       if (days <= 0) {
-        return "Ошибка: Дата выезда должна быть позже даты заезда!";
+        return "Error: Check out date must be after check in date!";
       }
 
-      double totalPrice=room.getPrice()*nights;
+      double totalPrice=room.getPrice() * days;
 
       reservationRepo.createReservation(user.getId(), roomId, dateFrom, dateTo);
 
@@ -40,7 +45,7 @@ public class HotelController {
                "\nCustomer: " + user.getName() + " " + user.getSurname() +
                "\nPhone: " + user.getPhone() +
                "\nRoom Type: " + room.getType() +
-               "\nStay duration: " + nights + " nights" +
+               "\nStay duration: " + days + " nights" +
                "\nTotal Price: " + totalPrice + " KZT";
 
 

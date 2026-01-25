@@ -12,7 +12,8 @@ public class Main {
     public static void main(String[] args) {
         UserRepository userRepo = new UserRepository();
         RoomRepository roomRepo = new RoomRepository();
-        HotelController controller = new HotelController(roomRepo);
+        ReservationRepository reservationRepo = new ReservationRepository();
+        HotelController controller = new HotelController(roomRepo, reservationRepo);
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to the Hotel Booking System!");
@@ -50,10 +51,10 @@ public class Main {
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
 
-                    System.out.print("Дата заезда (2023-12-31): ");
+                    System.out.print("Check-in date (2023-12-31): ");
                     String dateFrom = scanner.next();
 
-                    System.out.print("Дата выезда (2024-01-05): ");
+                    System.out.print("Check-out date (2024-01-05): ");
                     String dateTo = scanner.next();
 
                     String res = controller.makeReservation(user, roomId, dateFrom, dateTo);
