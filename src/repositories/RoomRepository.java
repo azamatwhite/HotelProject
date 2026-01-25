@@ -9,7 +9,8 @@ import java.util.List;
 public class RoomRepository{
     public List<Room> getAllRooms(){
         List<Room> rooms=new ArrayList<>();
-        String sql="SELECT * FROM rooms";
+        String sql="SELECT * FROM rooms ORDER BY room_number";
+
         try (Connection con =PostgresDB.getConnection()) {
             Statement st=con.createStatement();
             ResultSet rs=st.executeQuery(sql);
@@ -39,7 +40,7 @@ public class RoomRepository{
            ResultSet rs=st.executeQuery();
            if(rs.next()){
             return new Room(
-               rs.getInt("id"),
+                    rs.getInt("id"),
                     rs.getInt("room_number"),
                     rs.getString("type"),
                     rs.getDouble("price")

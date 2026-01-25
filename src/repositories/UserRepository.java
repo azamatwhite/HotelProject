@@ -3,6 +3,8 @@ package repositories;
 import data.PostgresDB;
 import models.User;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository {
     public void createUser(User user){
@@ -21,7 +23,7 @@ public class UserRepository {
         }
     }
         public User getIdbyUser(int id){
-            String sql="SELECT * FROM users";
+            String sql="SELECT * FROM users WHERE id = ?";
             try(Connection con =PostgresDB.getConnection()){
                 PreparedStatement st=con.prepareStatement(sql);
                 st.setInt(1, id);

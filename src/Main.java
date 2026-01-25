@@ -1,5 +1,6 @@
 import controllers.HotelController;
 import models.User;
+import models.Room;
 import repositories.RoomRepository;
 import repositories.UserRepository;
 
@@ -39,7 +40,11 @@ public class Main {
                     System.out.println("User registered successfully!");
 
 
-                    
+                    System.out.println("\nAvailable Rooms:");
+
+                    for (Room r:roomRepo.getAllRooms()){
+                        System.out.println(r);
+                    }  
                     System.out.print("Enter Room ID: ");
                     int roomId = scanner.nextInt();
 
