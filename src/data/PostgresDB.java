@@ -2,22 +2,38 @@ package data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
+import java.sql.SQLException;
 public class PostgresDB {
-public static Connection getConnection(){
-   try {
-       Class.forName("org.postgresql.Driver");
+    private static PostgresDB instance;
+    private Connection connection;
 
-       return DriverManager.getConnection("jdbc:postgresql://localhost:5432/hoteldb", "postgres", "root");
-
-   } catch (Exception e) {
-    System.out.println("Error: Cannot get connection with DB");
-
-            System.out.println(e.getMessage());
-
-            throw new RuntimeException(e);
-
+    private PostgresDB() {
+        try {
+            Class.forName("org.postgresql.Driver");
+            this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hoteldb", "postgres", "root");
+        } catch (Exception e) {
+            System.out.println("Connection Failed: " + e.getMessage());
         }
+    }
+
+    public static PostgresDB getInstance() {
+        if (instance == null) {
+            instance = new PostgresDB();
+        } else {
+            try {
+                if (instance.getConnection().isClosed()) {
+                    instance = new PostgresDB();
+                }
+            } catch (SQLException e) {
+                instance = new PostgresDB();
+            }
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
 
     }
 }

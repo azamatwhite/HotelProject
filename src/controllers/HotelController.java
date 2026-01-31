@@ -17,31 +17,31 @@ public class HotelController {
     }
 
     public String makeReservation(User user,int roomId, String dateFrom, String dateTo) {
-      Room room=roomRepo.getRoomByid(roomId);
+        Room room=roomRepo.getRoomByid(roomId);
 
-      if(room==null){
+        if(room==null){
         return "Error : room not found!";
-      }
+        }
 
-      boolean available = reservationRepo.isRoomAvailable(roomId, dateFrom, dateTo);
+        boolean available = reservationRepo.isRoomAvailable(roomId, dateFrom, dateTo);
 
-      if (!available) {
-          return "Error: Room is already booked for this dates.";
-      }
-      LocalDate start = LocalDate.parse(dateFrom);
-      LocalDate end = LocalDate.parse(dateTo);
+        if (!available) {
+            return "Error: Room is already booked for this dates.";
+        }
+        LocalDate start = LocalDate.parse(dateFrom);
+        LocalDate end = LocalDate.parse(dateTo);
 
-      long days = ChronoUnit.DAYS.between(start, end);
+        long days = ChronoUnit.DAYS.between(start, end);
 
-      if (days <= 0) {
-        return "Error: Check out date must be after check in date!";
-      }
+        if (days <= 0) {
+            return "Error: Check out date must be after check in date!";
+        }
 
-      double totalPrice=room.getPrice() * days;
+        double totalPrice=room.getPrice() * days;
 
-      reservationRepo.createReservation(user.getId(), roomId, dateFrom, dateTo);
+        reservationRepo.createReservation(user.getId(), roomId, dateFrom, dateTo);
 
-    return "\nRESERVATION DETAILS:" +
+        return "\nRESERVATION DETAILS:" +
                "\nCustomer: " + user.getName() + " " + user.getSurname() +
                "\nPhone: " + user.getPhone() +
                "\nRoom Type: " + room.getType() +
@@ -49,5 +49,5 @@ public class HotelController {
                "\nTotal Price: " + totalPrice + " KZT";
 
 
-    }
+        }
 }
