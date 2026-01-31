@@ -2,52 +2,60 @@ package repositories;
 
 import data.PostgresDB;
 import models.User;
+import repositories.interfaces.IUserRepository;
 import java.sql.*;
 
+public class UserRepository implements IUserRepository {
 
-public class UserRepository {
-    public void createUser(User user){
-        String sql="INSERT INTO users(name, surname, phone) VALUES(?, ?, ?)";
-
-        try (Connection con = PostgresDB.getConnection()) {
-
-            PreparedStatement st = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+    @Override
+    public User createUser(User user) {
+        String sql = "INSERT INTO users(name, surname, phone, role) VALUES(?, ?, ?, ?)";
+        try {
+            Connection con = PostgresDB.getInstance().getConnection();
+            PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, user.getName());
             st.setString(2, user.getSurname());
             st.setString(3, user.getPhone());
+            st.setString(4, "CLIENT"); // Default role
             st.execute();
-
+            
             ResultSet rs = st.getGeneratedKeys();
             if (rs.next()) {
-                int generatedId = rs.getInt(1);
-                user.setId(generatedId);
+                user.setId(rs.getInt(1));
             }
-        } catch (Exception e) {
-            System.out.println("Error SQL : "+ e.getMessage());
-
+            return user;
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
+        return null;
     }
-        public User getIdbyUser(int id){
-            String sql="SELECT * FROM users WHERE id = ?";
-            try(Connection con =PostgresDB.getConnection()){
-                PreparedStatement st=con.prepareStatement(sql);
-                st.setInt(1, id);
-                ResultSet rs=st.executeQuery();
-                if(rs.next()){
-                    return new User(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("surname"),
-                        rs.getString("phone")
 
+    @Override
+    public User getUserByPhone(String phone) {
+        String sql = "SELECT * FROM users WHERE phone = ?";
+        try {
+            Connection con = PostgresDB.getInstance().getConnection();
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, phone);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new User(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("surname"),
+                    rs.getString("phone"),
+                    rs.getString("role")
                 );
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-
-            }
-    return null;
+        return null;
+    }
+    
+    @Override
+    public User getUserById(int id) {
+        // Implementation similar to getByPhone...
+        return null; 
     }
 }
-
