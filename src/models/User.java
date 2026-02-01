@@ -5,51 +5,22 @@ public class User {
     private String name;
     private String surname;
     private String phone;
+    private String role; // "role" өрісі болуы шарт
 
-    public User() {
-    }
-
-    public User(int id, String name, String surname, String phone) {
-        setId(id);
-        setName(name);
-        setSurname(surname);
-        setPhone(phone);
-    }
-
-    public void setId(int id) {
+    // Конструктор 5 аргументті болуы керек
+    public User(int id, String name, String surname, String phone, String role) {
         this.id = id;
-    }
-
-    public int getId(){
-        return id;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setPhone(String phone) {
         this.phone = phone;
+        this.role = role;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    @Override
-    public String toString() {
-        return id + ". " + name + " " + surname + " " + " (" + phone + ")";
-    }
+    // Геттерлер мен Сеттерлер
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public String getName() { return name; }
+    public String getRole() { return role; } // Бұл әдіс Main-де қолданылады
+    public String getSurname() { return surname; }
+    public String getPhone() { return phone; }
 }
