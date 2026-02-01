@@ -16,7 +16,7 @@ public class UserRepository implements IUserRepository {
             st.setString(1, user.getName());
             st.setString(2, user.getSurname());
             st.setString(3, user.getPhone());
-            st.setString(4, "CLIENT"); // Default role
+            st.setString(4, "CLIENT");
             st.execute();
             
             ResultSet rs = st.getGeneratedKeys();
@@ -51,11 +51,5 @@ public class UserRepository implements IUserRepository {
             System.out.println(e.getMessage());
         }
         return null;
-    }
-    
-    @Override
-    public User getUserById(int id) {
-        // Implementation similar to getByPhone...
-        return null; 
     }
 }

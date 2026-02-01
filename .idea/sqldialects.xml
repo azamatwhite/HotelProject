@@ -2,5 +2,8 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/hoteldb.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/repositories/ReservationRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/repositories/RoomRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/repositories/UserRepository.java" dialect="GenericSQL" />
   </component>
 </project>
