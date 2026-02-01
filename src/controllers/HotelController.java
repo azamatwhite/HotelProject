@@ -1,23 +1,23 @@
 package controllers;
 
-import repositories.ReservationRepository;
-import repositories.RoomRepository;
+import repositories.interfaces.IReservationRepository;
+import repositories.interfaces.IRoomRepository;
 import models.Room;
 import models.User;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class HotelController {
-    private RoomRepository roomRepo;
-    private ReservationRepository reservationRepo;
+    private IRoomRepository roomRepo;
+    private IReservationRepository reservationRepo;
 
-    public HotelController(RoomRepository roomRepo, ReservationRepository reservationRepo) {
+    public HotelController(IRoomRepository roomRepo, IReservationRepository reservationRepo) {
       this.roomRepo=roomRepo;
       this.reservationRepo=reservationRepo;
     }
 
     public String makeReservation(User user,int roomId, String dateFrom, String dateTo) {
-      Room room=roomRepo.getRoomByid(roomId);
+      Room room=roomRepo.getRoomById(roomId);
 
       if(room==null){
         return "Error : room not found!";
