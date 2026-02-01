@@ -34,5 +34,4 @@ public class PostgresDB {
     public Connection getConnection() {
         return connection;
     }
-
-    }
+}

@@ -16,13 +16,13 @@ public class Main {
         HotelController controller = new HotelController(roomRepo, resRepo);
         
         Scanner scanner = new Scanner(System.in);
-        System.out.println("=== Welcome to the Advanced Hotel System ===");
+        System.out.println("=== Welcome to the Hotel System ===");
         
         System.out.print("Enter your phone number to login/register: ");
         String phone = scanner.next();
 
-        if (!phone.matches("\\d+") || phone.length() < 5) {
-            System.out.println("Invalid phone format! Exiting.");
+        if (!phone.matches("\\d{5}")) {
+            System.out.println("Phone number can be 5 symbols at length! Exiting.");
             return;
         }
 

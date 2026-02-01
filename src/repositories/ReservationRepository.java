@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationRepository implements IReservationRepository {
-    
-    // 1. Implementation of 'JOIN's
+
     @Override
     public List<String> getAllReservationsFullInfo() {
         List<String> details = new ArrayList<>();
