@@ -10,7 +10,7 @@ public class PostgresDB {
     private PostgresDB() {
         try {
             Class.forName("org.postgresql.Driver");
-            this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hoteldb", "postgres", "root");
+            this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/db", "postgres", "root");
         } catch (Exception e) {
             System.out.println("Connection Failed: " + e.getMessage());
         }

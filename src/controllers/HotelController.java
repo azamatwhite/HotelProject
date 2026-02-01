@@ -6,6 +6,8 @@ import models.Room;
 import models.User;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.ArrayList;
 
 public class HotelController {
     private IRoomRepository roomRepo;
@@ -14,6 +16,18 @@ public class HotelController {
     public HotelController(IRoomRepository roomRepo, IReservationRepository reservationRepo) {
       this.roomRepo=roomRepo;
       this.reservationRepo=reservationRepo;
+    }
+
+    public List<Room> getAvailableRooms(String dateFrom, String dateTo) {
+        List<Room> allRooms = roomRepo.getAllRooms();
+        List<Room> availableRooms = new ArrayList<>();
+
+        for (Room room : allRooms) {
+            if (reservationRepo.isRoomAvailable(room.getId(), dateFrom, dateTo)) {
+                availableRooms.add(room);
+            }
+        }
+        return availableRooms;
     }
 
     public String makeReservation(User user,int roomId, String dateFrom, String dateTo) {
